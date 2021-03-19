@@ -10,11 +10,11 @@ def read_file(file):
     min_range, max_range = fr.readline().split(' ')
     min_range = int(min_range)
     max_range = int(max_range)
-    evaluations = [10,17,6,1,17,18,9,18,16]
-    # for _ in range(leaf_nodes_num):
-    #     i = random.randint(min_range, max_range)
-    #     evaluations.append(i)
-    #     print('leaf value:', evaluations[_])
+    evaluations = []
+    for _ in range(leaf_nodes_num):
+        i = random.randint(min_range, max_range)
+        evaluations.append(i)
+        # print('leaf value:', evaluations[_])
     
     return depth, node_num, leaf_nodes_num, evaluations
 
@@ -27,7 +27,7 @@ def minimax(position, depth, alpha, beta, maximizingPlayer, count):
     if maximizingPlayer:
         maxEval = -10000
         for child in range(node_num):
-            eval, count = minimax((position * 2) + child, depth - 1, alpha, beta, False, count)
+            eval, count = minimax((position * node_num) + child, depth - 1, alpha, beta, False, count)
             maxEval = max(maxEval, eval)
             alpha = max(alpha, eval)
             if alpha >= beta:
@@ -39,7 +39,7 @@ def minimax(position, depth, alpha, beta, maximizingPlayer, count):
         
         minEval = 10000
         for child in range(node_num):
-            eval, count = minimax((position * 2) + child, depth - 1, alpha, beta, True, count)
+            eval, count = minimax((position * node_num) + child, depth - 1, alpha, beta, True, count)
             
             minEval = min(minEval, eval)
             beta = min(beta, eval)
